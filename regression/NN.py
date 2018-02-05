@@ -47,14 +47,14 @@ class Model(chainer.Chain):
 
         
 class NN(NNfuncs.NN):
-    def __init__(self, resumemodelName=None):
-        self.resumemodelName = resumemodelName
+    def __init__(self, resume_model_name=None):
+        self.resume_model_name = resume_model_name
         self.train_loss, self.test_loss = [], []
-        if self.resumemodelName is not None:
+        if self.resume_model_name is not None:
             print("load resume model!")
-            self.loadModel(self.resumemodelName)
+            self.load_model(self.resume_model_name)
 
-    def trainModel(self, x_train, y_train, x_test, y_test, n_epoch, batchsize):
+    def train_model(self, x_train, y_train, x_test, y_test, n_epoch, batchsize):
         print("Start training and validation loop......")
         N = len(x_train)
         N_test = len(x_test)
@@ -83,15 +83,15 @@ class NN(NNfuncs.NN):
             print('test  mean loss={}'.format(sum_loss / N_test))
             self.test_loss.append(sum_loss / N_test)
 
-    def fit(self, fit_X, fit_y, batchsize=100, n_epoch=10, n_units1=512, n_units2=128, tv_ratio=0.95, optimizerAlgorithm="Adam", savefigName="result.png", savemodelName="MLP.model"):
+    def fit(self, fit_X, fit_y, batchsize=100, n_epoch=10, n_units1=512, n_units2=128, tv_ratio=0.95, optimizer_algorithm="Adam", save_image_name="result.png", save_model_name="MLP.model"):
         train_X, train_y, validate_X, validate_y = self.splitData(fit_X, fit_y, tv_ratio)
         print("The number of data, train:", len(train_X), "validate:", len(validate_X))                # トレーニングとテストのデータ数を表示
 
-        if self.resumemodelName is None:
-            self.initializeModel(Model, train_X, n_units1, n_units2, optimizerAlgorithm)
+        if self.resume_model_name is None:
+            self.initializeModel(Model, train_X, n_units1, n_units2, optimizer_algorithm)
 
-        self.trainModel(train_X, train_y, validate_X, validate_y, n_epoch, batchsize)
+        self.train_model(train_X, train_y, validate_X, validate_y, n_epoch, batchsize)
 
         plot_result.loss(self.train_loss, self.test_loss)
-        self.saveModels(savemodelName)
+        self.save_models(save_model_name)
 

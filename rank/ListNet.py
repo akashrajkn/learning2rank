@@ -86,16 +86,16 @@ class ListNet(NNfuncs.NN):
         Model.fit(X, y)
 
     With options:
-        Model.fit(X, y, batchsize=100, n_epoch=200, n_units1=512, n_units2=128, tv_ratio=0.95, optimizerAlgorithm="Adam", savefigName="result.pdf", savemodelName="ListNet.model"):
+        Model.fit(X, y, batchsize=100, n_epoch=200, n_units1=512, n_units2=128, tv_ratio=0.95, optimizer_algorithm="Adam", save_image_name="result.pdf", save_model_name="ListNet.model"):
 
     """
-    def __init__(self, resumemodelName=None):
-        self.resumemodelName = resumemodelName
+    def __init__(self, resume_model_name=None):
+        self.resume_model_name = resume_model_name
         self.train_loss, self.test_loss = [], []
         self.train_acc, self.test_acc = [], []
-        if resumemodelName is not None:
+        if resume_model_name is not None:
             print("load resume model!")
-            self.loadModel(resumemodelName)
+            self.load_model(resume_model_name)
 
     # リストネットの誤差関数
     def ndcg(self, y_true, y_score, k=100):
@@ -113,7 +113,7 @@ class ListNet(NNfuncs.NN):
         return ndcg
 
     # リストネットのトレーニング専用関数
-    def trainModel(self, x_train, y_train, x_test, y_test, n_epoch, batchsize):
+    def train_model(self, x_train, y_train, x_test, y_test, n_epoch, batchsize):
         print("Start training and validation loop......")
         N = len(x_train)
         N_test = len(x_test)
@@ -152,20 +152,20 @@ class ListNet(NNfuncs.NN):
             print("NDCG@100 | train: {0}, test: {1}".format(train_ndcg, test_ndcg))
 
 
-    def fit(self, fit_X, fit_y, batchsize=100, n_epoch=200, n_units1=512, n_units2=128, tv_ratio=0.95, optimizerAlgorithm="Adam", savefigName="result.pdf", savemodelName="ListNet.model"):
+    def fit(self, fit_X, fit_y, batchsize=100, n_epoch=200, n_units1=512, n_units2=128, tv_ratio=0.95, optimizer_algorithm="Adam", save_image_name="result.pdf", save_model_name="ListNet.model"):
         train_X, train_y, validate_X, validate_y = self.splitData(fit_X, fit_y, tv_ratio)
         print("The number of data, train:", len(train_X), "validate:", len(validate_X))                # トレーニングとテストのデータ数を表示
 
-        if self.resumemodelName is None:
-            self.initializeModel(Model, train_X, n_units1, n_units2, optimizerAlgorithm)
+        if self.resume_model_name is None:
+            self.initializeModel(Model, train_X, n_units1, n_units2, optimizer_algorithm)
         
-        self.trainModel(train_X, train_y, validate_X, validate_y, n_epoch, batchsize)
+        self.train_model(train_X, train_y, validate_X, validate_y, n_epoch, batchsize)
 
         plot_result.acc(self.train_acc, self.test_acc)
         plot_result.loss(self.train_loss, self.test_loss)
-        self.saveModels(savemodelName)
+        self.save_models(save_model_name)
 
-    def test(self, fit_X, fit_y, batchsize=100, n_epoch=1, tv_ratio=0.95, optimizerAlgorithm="Adam"):
+    def test(self, fit_X, fit_y, batchsize=100, n_epoch=1, tv_ratio=0.95, optimizer_algorithm="Adam"):
         """
         usage:
         Model = ListNet(MODELNAME)
@@ -174,7 +174,7 @@ class ListNet(NNfuncs.NN):
         
         train_X, train_y, validate_X, validate_y = self.splitData(fit_X, fit_y, tv_ratio)
         print("The number of data, train:", len(train_X), "validate:", len(validate_X))                # トレーニングとテストのデータ数を表示        
-        self.trainModel(train_X, train_y, validate_X, validate_y, n_epoch, batchsize)
+        self.train_model(train_X, train_y, validate_X, validate_y, n_epoch, batchsize)
 
 
 ################################################################################################

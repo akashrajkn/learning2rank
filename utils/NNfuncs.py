@@ -19,34 +19,34 @@ from learning2rank.utils import plot_result
 
 class NN(object):
 
-    def loadModel(self, modelName):
+    def load_model(self, modelName):
         print('Load model')
         serializers.load_hdf5(modelName, self.model)
         print('Load optimizer state')
         serializers.load_hdf5(modelName[:-5] + 'state', self.optimizer)
 
 
-    def initializeModel(self, Model, train_X, n_units1, n_units2, optimizerAlgorithm):
+    def initializeModel(self, Model, train_X, n_units1, n_units2, optimizer_algorithm):
         print("prepare initialized model!")
         self.model = Model(len(train_X[0]), n_units1, n_units2, 1)
-        self.initializeOptimizer(optimizerAlgorithm)
+        self.initializeOptimizer(optimizer_algorithm)
 
-    def initializeOptimizer(self, optimizerAlgorithm):
-        if optimizerAlgorithm == "Adam":
+    def initializeOptimizer(self, optimizer_algorithm):
+        if optimizer_algorithm == "Adam":
             self.optimizer = optimizers.Adam()
-        elif optimizerAlgorithm == "AdaGrad":
+        elif optimizer_algorithm == "AdaGrad":
             self.optimizer = optimizers.AdaGrad()
-        elif optimizerAlgorithm == "SGD":
+        elif optimizer_algorithm == "SGD":
             self.optimizer = optimizers.MomentumSGD()
         else:
-            raise ValueError('could not find %s in optimizers {"Adam", "AdaGrad", "SGD"}' % (optimizerAlgorithm))
+            raise ValueError('could not find %s in optimizers {"Adam", "AdaGrad", "SGD"}' % (optimizer_algorithm))
         self.optimizer.setup(self.model)
 
-    def saveModels(self, savemodelName):
+    def save_models(self, save_model_name):
         print('save the model')
-        serializers.save_hdf5(savemodelName, self.model) 
+        serializers.save_hdf5(save_model_name, self.model) 
         print('save the optimizer')
-        serializers.save_hdf5(savemodelName[:-5]+ 'state', self.optimizer)  
+        serializers.save_hdf5(save_model_name[:-5]+ 'state', self.optimizer)  
 
     def splitData(self, fit_X, fit_y, tv_ratio):
         print('load dataset')

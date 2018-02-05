@@ -39,7 +39,7 @@ Here, `X` is numpy array with the shape of (num_samples, num_features) and `y` i
 Possible options and defaults:
 
 ```
-batchsize=100, n_iter=5000, n_units1=512, n_units2=128, tv_ratio=0.95, optimizerAlgorithm="Adam", savefigName="result.pdf", savemodelName="RankNet.model"
+batchsize=100, iterations=5000, n_units1=512, n_units2=128, tv_ratio=0.95, optimizer_algorithm="Adam", save_image_name="result.pdf", save_model_name="RankNet.model"
 ```
 
 ```n_units1``` and ```n_units2=128``` are the number of nodes in hidden layer 1 and 2 in the neural net.
@@ -84,7 +84,7 @@ Same as ranknet, `X` is numpy array with the shape of (num_samples, num_features
 Possible options and defaults:
 
 ```
-batchsize=100, n_epoch=200, n_units1=512, n_units2=128, tv_ratio=0.95, optimizerAlgorithm="Adam", savefigName="result.pdf", savemodelName="ListNet.model"
+batchsize=100, n_epoch=200, n_units1=512, n_units2=128, tv_ratio=0.95, optimizer_algorithm="Adam", save_image_name="result.pdf", save_model_name="ListNet.model"
 ```
 
 Predict
@@ -116,7 +116,7 @@ Model.fit(X, y)
 Possible options and defaults:
 
 ```
-batchsize=100, n_iter=5000, n_units1=512, n_units2=128, tv_ratio=0.95, optimizerAlgorithm="Adam", savefigName="result.pdf", savemodelName="RankNet.model"
+batchsize=100, iterations=5000, n_units1=512, n_units2=128, tv_ratio=0.95, optimizer_algorithm="Adam", save_image_name="result.pdf", save_model_name="RankNet.model"
 ```
 
 ```n_units1``` and ```n_units2=128``` are the number of nodes in hidden layer 1 and 2 in the neural net.
